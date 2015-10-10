@@ -58,7 +58,7 @@ for x in range(width-width0):
                 screen.set_at((x,y),(0,dif*2,0,255))
         except:
             screen.set_at((x,y),(255,255,255,255))
-    print(x/(width-width0))
+    
     pygame.display.flip()
 
 print((round(np.mean(highX)),round(np.mean(highY)))," heeft waarde:" ,highest)

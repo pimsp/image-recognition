@@ -20,7 +20,7 @@ def haardifference(image,haar):
     
     return abs(int((np.mean(white)-np.mean(black))/3))
 def test(haar):
-    numberOfTruePicturs=6
+    numberOfTruePicturs=33
     numberOfFalsePicturs=11
     true=[]
     false=[]
@@ -37,16 +37,17 @@ def test(haar):
 
 
 pygame.init()
-for j in range(10,15):
+for j in range(11,12):
     haar=pygame.image.load("haars\\blanck.png")
     lasthaar=pygame.image.load("haars\\blanck.png")
+    maxhaar=pygame.image.load("haars\\blanck.png")
     score=0
     maxScore=0
-    atempts=10000
+    atempts=50000
     for i in range(atempts):
-        n=10*i/atempts
+        n=20*i/atempts
         if n==int(n):
-            print(str(int(10*n))+"%")
+            print(str(int(5*n))+"%")
             print(" ",maxScore)
         lasthaar=pygame.Surface.copy(haar)
         x=rnd.randint(0,39)
@@ -60,10 +61,11 @@ for j in range(10,15):
             haar=pygame.Surface.copy(lasthaar)
         elif not score<=maxScore:
             maxScore=score
+            maxhaar=pygame.Surface.copy(haar)
     print("100%")
-    print(j,":",test(haar))
+    print(j,":",test(maxhaar))
     print()
-    pygame.image.save(haar,"haars\\"+str(j)+".png")
+    pygame.image.save(maxhaar,"haars\\"+str(j)+".png")
 
 
     

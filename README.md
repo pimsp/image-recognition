@@ -6,3 +6,4 @@ A haar is a black and white image that is smaller than the original image. For a
 The cascade part means that all positions that succeed in the first test, will undergo another to be more certain it is an eye. If it succeds, yet another haar will be overlaid, untill we are almost certain that the position is one of an eye.
 
 NOTE: all pictures included are of myself. In real-life testing I will use more images of different people, but I can't put them on-line. 
+
