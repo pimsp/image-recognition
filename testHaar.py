@@ -1,12 +1,16 @@
 import pygame,math,sys
-import numpy as np
+
 #SETTINGS:
-numberOfFaces=10
-haarNumber=11
+startFace=0
+numberOfFaces=20
+haarNumber=2
 
 
-
-
+def mean(array):
+	out=0
+	for waarde in array:
+		out+=waarde
+	return out/len(array)
 
 def haardifference(image,haar,x,y):
     white=[]
@@ -22,13 +26,15 @@ def haardifference(image,haar,x,y):
                 (r,g,b,a)=image.get_at((xh+x,yh+y))
                 black.append(r+g+b)
     
-    return abs(int((np.mean(white)-np.mean(black))/3))
+    return abs(int((mean(white)-mean(black))/3))
 #open haar
 haar=pygame.image.load("haars/"+str(haarNumber)+".png")
 Hwidth=haar.get_rect()[2]
 Hheight=haar.get_rect()[3]
-for im in range(numberOfFaces):
-    pygame.init()
+pygame.init()
+for i in range(numberOfFaces):
+    im=i+startFace
+    print(im)
     image=pygame.image.load("faces/"+str(im)+".jpg")
     width=image.get_rect()[2]
     height=image.get_rect()[3]
@@ -60,5 +66,3 @@ for im in range(numberOfFaces):
             pygame.image.save(cropped,"results\\"+str(im)+".png")
         else:
             pygame.image.save(cropped,"results\\"+str(im)+"."+str(i)+".png")
-print((round(np.mean(highX)),round(np.mean(highY)))," heeft waarde:" ,highest)
-print(haardifference(image,haar0,round(np.mean(highX)),round(np.mean(highY))))

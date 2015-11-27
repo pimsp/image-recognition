@@ -1,48 +1,51 @@
 #face recognision using haar-cascade
 import pygame,math,sys
-#import pandas as pd
-import numpy as np
-#import matplotlib as mp
 
-def haardifference(image,haar,x,y):
-    white=[]
+
+def mean(array):
+	out=0
+	for waarde in array:
+		out+=waarde
+	return out/len(array)
+
+def haardifference(image,haar,X,Y):
+    ret=[]
+    width=len(haar[0])
+    height=len(haar)
     black=[]
-    width=haar.get_rect()[2]
-    height=haar.get_rect()[3]
-    for xh in range(width):
-        for yh in range(height):
-            if haar.get_at((xh,yh))==(255,255,255,255):
-                (r,g,b,a)=image.get_at((xh+x,yh+y))
-                white.append(r+g+b)
-            if haar.get_at((xh,yh))==(0,0,0,255):
-                (r,g,b,a)=image.get_at((xh+x,yh+y))
-                black.append(r+g+b)
-    
-    return abs(int((np.mean(white)-np.mean(black))/3))
+    for x in range(width):
+        for y in range(height):
+            (r,g,b,a)=image.get_at((x+X,y+Y))
+            ret.append((r+b+g)*haar[y][x])
+    return abs(int(mean(ret)))
             
             
             
 #open image
 pygame.init()
-image=pygame.image.load("3175.jpg")
-width=image.get_rect()[2]
-height=image.get_rect()[3]
+image=pygame.image.load("faces\\0.jpg")
 
-#detect face
-haar0=pygame.image.load("haars/7.png")
-width0=haar0.get_rect()[2]
-height0=haar0.get_rect()[3]
 
-haar1=pygame.image.load("haars/0.png")
-width1=haar1.get_rect()[2]
-height1=haar1.get_rect()[3]
-screen = pygame.display.set_mode((width-width0,height-height0))
+#open haar
+ar=open("haars\\"+str(0)+".txt", "r").read()[2:-2].split('], [')
+haar=[[int(i) for i in st.split(',')] for st in ar]
+
+width=image.get_rect()[2]-len(haar[0])
+height=image.get_rect()[3]-len(haar)
+
+screen = pygame.display.set_mode((width,height))
 highest=0
 highX=[]
 highY=[]
-for x in range(width-width0):
-    for y in range(height-height0):
-        dif = haardifference(image,haar0,x,y)
+def mean(array):
+	out=0
+	for waarde in array:
+		out+=waarde
+	return out/len(array)
+
+for x in range(width):
+    for y in range(height):
+        dif = haardifference(image,haar,x,y)
 
         if dif==highest:
             highX.append(x)
@@ -61,14 +64,14 @@ for x in range(width-width0):
     
     pygame.display.flip()
 
-print((round(np.mean(highX)),round(np.mean(highY)))," heeft waarde:" ,highest)
-print(haardifference(image,haar0,round(np.mean(highX)),round(np.mean(highY))))
+print((round(mean(highX)),round(mean(highY)))," heeft waarde:" ,highest)
+print(haardifference(image,haar,round(mean(highX)),round(mean(highY))))
 
-screen.set_at((int(round(np.mean(highX))),int(round(np.mean(highY)))),(255,0,0))
-screen.set_at((int(round(np.mean(highX)))+1,int(round(np.mean(highY)))-1),(255,0,0))
-screen.set_at((int(round(np.mean(highX)))+1,int(round(np.mean(highY)))+1),(255,0,0))
-screen.set_at((int(round(np.mean(highX)))-1,int(round(np.mean(highY)))+1),(255,0,0))
-screen.set_at((int(round(np.mean(highX)))-1,int(round(np.mean(highY)))-1),(255,0,0))
+screen.set_at((int(round(mean(highX))),int(round(mean(highY)))),(255,0,0))
+screen.set_at((int(round(mean(highX)))+1,int(round(mean(highY)))-1),(255,0,0))
+screen.set_at((int(round(mean(highX)))+1,int(round(mean(highY)))+1),(255,0,0))
+screen.set_at((int(round(mean(highX)))-1,int(round(mean(highY)))+1),(255,0,0))
+screen.set_at((int(round(mean(highX)))-1,int(round(mean(highY)))-1),(255,0,0))
 #print(haardifference(image,haar0,21,41))
 #print(haardifference(image,haar0,36,41))
 
