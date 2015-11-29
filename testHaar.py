@@ -7,10 +7,7 @@ haarNumber=2
 
 
 def mean(array):
-	out=0
-	for waarde in array:
-		out+=waarde
-	return out/len(array)
+	return sum(array)/len(array)
 
 def haardifference(image,haar,x,y):
     white=[]
