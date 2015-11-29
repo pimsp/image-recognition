@@ -3,10 +3,7 @@ import pygame,math,sys
 
 
 def mean(array):
-	out=0
-	for waarde in array:
-		out+=waarde
-	return out/len(array)
+	return sum(array)/len(array)
 
 def haardifference(image,haar,X,Y):
     ret=[]
